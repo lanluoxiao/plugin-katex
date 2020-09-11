@@ -15,7 +15,7 @@ module.exports = {
         ]
     },
     blocks: {
-        math: {
+        mathBlock: {
             shortcuts: {
                 parsers: ["markdown", "asciidoc", "restructuredtext"],
                 start: "$$",
@@ -23,9 +23,23 @@ module.exports = {
             },
             process: function(blk) {
                 var tex = blk.body;
-                var isInline = !(tex[0] == "\n");
                 var output = katex.renderToString(tex, {
-                    displayMode: !isInline
+                    displayMode: true
+                });
+
+                return output;
+            }
+        },
+        mathInline: {
+            shortcuts: {
+                parsers: ["markdown", "asciidoc", "restructuredtext"],
+                start: "$",
+                end: "$"
+            },
+            process: function(blk) {
+                var tex = blk.body;
+                var output = katex.renderToString(tex, {
+                    displayMode: false
                 });
 
                 return output;
